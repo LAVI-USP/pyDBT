@@ -9,13 +9,13 @@ Created on Tue Jan 21 18:23:29 2020
 import setuptools
 
 projectionDDb = setuptools.Extension('projectionDDb',
-                                      sources = ['pyDBT/sources/projectionDDb/projectionDDb.cpp'],
+                                      sources = ['pydbt/sources/projectionDDb/projectionDDb.cpp'],
                                       language='c++',
                                       extra_compile_args = ['-fopenmp'],
                                       extra_link_args=['-lgomp'])
 
 backprojectionDDb = setuptools.Extension('backprojectionDDb',
-                                      sources = ['pyDBT/sources/backprojectionDDb/backprojectionDDb.cpp'],
+                                      sources = ['pydbt/sources/backprojectionDDb/backprojectionDDb.cpp'],
                                       language='c++',
                                       extra_compile_args = ['-fopenmp'],
                                       extra_link_args=['-lgomp'])
