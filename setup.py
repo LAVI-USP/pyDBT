@@ -7,6 +7,18 @@ Created on Tue Jan 21 18:23:29 2020
 """
 
 import setuptools
+import os
+from sys import platform
+
+
+if platform == "darwin":
+    os.environ["CC"] = "gcc-9" 
+    os.environ["CXX"] = "g++-9"
+        
+elif platform == "win32":
+    raise ValueError('Windows is not supported yet.')
+
+
 
 projectionDDb = setuptools.Extension('projectionDDb',
                                       sources = ['pydbt/sources/projectionDDb/projectionDDb.cpp'],
@@ -39,9 +51,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    install_requires=["numpy", "matplotlib", "pydicom"],
     ext_modules = [projectionDDb, backprojectionDDb]
 )
-
-
-#os.system("g++-9 -shared -o lib/projectionDDb.so -fPIC sources/projectionDDb/projectionDDb.cpp -fopenmp")
-#os.system("g++-9 -shared -o lib/backprojectionDDb.so -fPIC sources/backprojectionDDb/backprojectionDDb.cpp -fopenmp")
