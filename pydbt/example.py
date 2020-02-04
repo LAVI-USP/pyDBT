@@ -16,6 +16,7 @@ from functions.dataPreProcess import dataPreProcess
 from functions.initialConfig import initialConfig
 
 from functions.FBP import FDK as FBP
+from functions.SIRT import SIRT
 
 
 #%% Call function for initial configurations
@@ -36,6 +37,7 @@ proj = dataPreProcess(proj, geo)
 
 #%% Set specific recon parameters
 
+nIter = [2];                 # Number of iterations (SIRT)
 filterType = 'FBP';          # Filter type: 'BP', 'FBP'
 cutoff = 0.75;               # Percentage until cut off frequency (FBP)
 
@@ -43,12 +45,15 @@ cutoff = 0.75;               # Percentage until cut off frequency (FBP)
 
 print("Starting reconstruction...")
 
-vol = FBP(proj, geo, filterType, cutoff, libFiles)
+#                       ## Uncomment to use ##
+# vol = FBP(proj, geo, filterType, cutoff, libFiles)
 
+vol = SIRT(proj, geo, nIter, libFiles)
 
 plt.figure()
 plt.title('Reconstructed slice')
 plt.imshow(vol[:,:,50] , cmap=plt.get_cmap('gist_gray'))
+plt.imsave('output/Reconstructed_slice.tiff',vol[:,:,50] , cmap=plt.get_cmap('gist_gray'))
 
 # print("Starting projection...")
 # proj = projectionDDb(vol, geo, libFiles) 
