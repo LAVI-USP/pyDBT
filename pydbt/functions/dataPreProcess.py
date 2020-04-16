@@ -7,6 +7,7 @@ Created on Tue Oct 22 10:34:24 2019
 """
 
 import numpy as np
+from scipy.ndimage.filters import uniform_filter1d
 
 def dataPreProcess(proj, geo):
     
@@ -25,13 +26,19 @@ def cropProj(proj):
     
     Gap = 20;
     
-    maxValue = np.max(proj)
+    # Horizontal Profile
+    vertProj = np.sum(proj[:,:,proj.shape[2]//2 - 1], axis=0)	
     
-    vertProj = np.sum(maxValue-proj[:,:,proj.shape[2]//2 - 1], axis=0)	# Horizontal Profile
+    # Smooth the signal and take the first derivative
+    firstDv = np.gradient(uniform_filter1d(vertProj, size=100))
     
-    Ind = np.argmax(np.diff(vertProj[10:])) - Gap   # Smooth the signal and takes its max positive derivative
+    # Smooth the signal and take the second derivative
+    secondDv = np.gradient(uniform_filter1d(firstDv, size=100))
     
-    proj_crop = proj[:,Ind:,:]
+    # Takes its min second derivative
+    indX = np.argmin(secondDv) - Gap 
+        
+    proj_crop = proj[:,indX::,:]
     		    
     return proj_crop
 
