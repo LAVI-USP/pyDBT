@@ -47,13 +47,13 @@ class geometry_settings():
     def SheppLogan(self):
          
         # Breast voxels density 
-        self.nx = 250    # number of voxels (columns)
-        self.ny = 250    # number of voxels (rows)
-        self.nz = 200    # number of voxels (slices)
+        self.nx = 150    # number of voxels (columns)
+        self.ny = 150    # number of voxels (rows)
+        self.nz = 128    # number of voxels (slices)
         
         # Detector panel pixel density
-        self.nu = 216    # number of pixels (columns)
-        self.nv = 650    # number of pixels (rows)
+        self.nu = 256    # number of pixels (columns)
+        self.nv = 448    # number of pixels (rows)
         
         # Single voxel real size (mm)
         self.dx = 0.112 
