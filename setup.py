@@ -19,6 +19,14 @@ elif platform == "win32":
     raise ValueError('Windows is not supported yet.')
 
 
+projectionDD = setuptools.Extension('projectionDD',
+                                     sources = ['pydbt/sources/projectionDD/projectionDD.cpp'],
+                                     language='c++')
+
+backprojectionDD = setuptools.Extension('backprojectionDD',
+                                     sources = ['pydbt/sources/backprojectionDD/backprojectionDD.cpp'],
+                                     language='c++')                                     
+
 
 projectionDDb = setuptools.Extension('projectionDDb',
                                       sources = ['pydbt/sources/projectionDDb/projectionDDb.cpp'],
@@ -38,7 +46,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyDBT",
-    version="0.0.1",
+    version="0.0.2",
     author="Rodrigo Vimieiro",
     description="This package is a python extension of the DBT toolbox from LAVI-USP",
     long_description=long_description,
@@ -52,5 +60,5 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=["numpy", "matplotlib", "pydicom"],
-    ext_modules = [projectionDDb, backprojectionDDb]
+    ext_modules = [projectionDD, backprojectionDD, projectionDDb, backprojectionDDb]
 )
