@@ -23,7 +23,9 @@ This repository is a python extension of the [DBT toolbox](https://github.com/LA
 
     * ```cd pydbt && python3 example.py```
  
- 5. The toolbox was tested on **Linux** (Ubuntu) x64, and **MacoS** Catalina machines, with python **3.7.5**.
+ 5. The toolbox was tested on **Linux** (Ubuntu 20) x64, and **MacoS** BigSur (Intel) machines, with python **3.7.5**.
+     * You will need to install gcc for the compilation. You can install gcc 11 on macOS through [homebrew](https://formulae.brew.sh/formula/gcc).
+     * Fell free to reach me if you want binaries for either Ubuntu or BigSur
  
  6. You can also run the [MATLAB version](https://github.com/LAVI-USP/DBT-Reconstruction) of the toolbox.
 

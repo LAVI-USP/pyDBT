@@ -12,8 +12,8 @@ from sys import platform
 
 
 if platform == "darwin":
-    os.environ["CC"] = "gcc-9" 
-    os.environ["CXX"] = "g++-9"
+    os.environ["CC"] = "gcc-11" 
+    os.environ["CXX"] = "g++-11"
         
 elif platform == "win32":
     raise ValueError('Windows is not supported yet.')
