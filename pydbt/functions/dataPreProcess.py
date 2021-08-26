@@ -9,9 +9,10 @@ Created on Tue Oct 22 10:34:24 2019
 import numpy as np
 from scipy.ndimage.filters import uniform_filter1d
 
-def dataPreProcess(proj, geo):
+def dataPreProcess(proj, geo, flagCropProj=True):
     
-    proj = cropProj(proj)
+    if flagCropProj:
+        proj = cropProj(proj)
     
     proj = transfIntensity(proj)
     
