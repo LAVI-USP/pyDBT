@@ -8,6 +8,7 @@ Created on Wed Jan 22 15:45:08 2020
 
 import numpy.ctypeslib as ctl
 import numpy as np
+import os
 
 
 def findAndLoadLibray(libFiles, libname):
@@ -30,3 +31,14 @@ def geoAsNp(geo):
     geoNp = np.asarray(geoList, dtype=np.float32)
     
     return geoNp
+
+def makedir(path2create):
+    """Create directory if it does not exists."""
+ 
+    error = 1
+    
+    if not os.path.exists(path2create):
+        os.makedirs(path2create)
+        error = 0
+    
+    return error
