@@ -8,6 +8,42 @@ Created on Mon Jan 13 15:19:22 2020
      
 class geometry_settings():
     
+    def Hologic(self):
+         
+        # Breast voxels density 
+        self.nx = 1996    # number of voxels (columns)
+        self.ny = 2457    # number of voxels (rows)
+        self.nz = 78     # number of voxels (slices)
+        
+        # Detector panel pixel density
+        self.nu = 1664    # number of pixels (columns)
+        self.nv = 2048    # number of pixels (rows)
+        
+        # Single voxel real size (mm)
+        self.dx = 0.112 
+        self.dy = 0.112
+        self.dz = 1
+        
+        # Single detector real size (mm)
+        self.du = 0.14  
+        self.dv = 0.14
+        
+        # X-ray source and detector distances
+        self.DSD = 700                           # Distance from source to detector (mm)
+        self.DSO = 597                           # Distance from source to the top of object (mm)
+        self.DDR = 0                             # Distance from detector to pivot (mm)
+        self.DSR = self.DSD - self.DDR           # Distance from source to pivot (mm)
+        self.DAG = 25                            # Distance of Air Gap (mm)         
+        
+        
+        # Number of Projections
+        self.nProj = 15  
+        
+        # Angle settings (Degrees)
+        self.tubeAngle = 15         # Tube Angle
+        
+        self.detAngle = 4.2         # Detector Angle
+    
     def GE(self):
          
         # Breast voxels density 
