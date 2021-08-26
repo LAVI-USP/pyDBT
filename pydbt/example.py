@@ -31,7 +31,7 @@ geo.GE()
 #%% Get DICOM data
 
 dcmPath = "/home/rodrigo/Downloads/imgs/"
-proj = readDicom(dcmPath,geo)
+proj,_ = readDicom(dcmPath,geo)
 
 proj = dataPreProcess(proj, geo)
 
