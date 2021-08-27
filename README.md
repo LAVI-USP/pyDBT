@@ -23,7 +23,7 @@ This repository is a python extension of the [DBT toolbox](https://github.com/LA
 
     * ```cd pydbt && python3 example.py```
  
- 5. The toolbox was tested on **Linux** (Ubuntu 20) x64, and **MacoS** BigSur (Intel) machines, with python **3.7.5**.
+ 5. The toolbox was tested on **Linux** (Ubuntu 20) x64, and **macOS** BigSur (Intel) machines, with python **3.7.5**.
      * You will need to install gcc for the compilation. You can install gcc 11 on macOS through [homebrew](https://formulae.brew.sh/formula/gcc).
      * Fell free to reach me if you want binaries for either Ubuntu or BigSur
  
@@ -33,7 +33,7 @@ This repository is a python extension of the [DBT toolbox](https://github.com/LA
 
 ## Contribute? 
 
-We are pleased with any contributions. Fell free to make any [pull requests](https://github.com/LAVI-USP/pyDBT/pulls) or send us an e-mail.
+We are pleased with any contributions. Feel free to make any [pull requests](https://github.com/LAVI-USP/pyDBT/pulls) or send us an e-mail.
 
 
 ## Toolbox manual:
@@ -42,7 +42,7 @@ You can find the [manual](https://github.com/LAVI-USP/DBT-Reconstruction/wiki/To
 
 ## Contact:
 
-If you have any question or suggestion, please send us an e-mail:
+If you have any questions or suggestion, please send us an e-mail:
 
 - Rodrigo - rodrigo dot vimieiro at gmail dot com
 - Marcelo - mvieira at sc dot usp dot br
