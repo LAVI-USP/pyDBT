@@ -27,7 +27,12 @@ def findLibraries(workDir):
     buildDir = workDir / '../build' 
     
     if not(buildDir.exists() and buildDir.is_dir()):
-        raise ValueError('Cannot find the build folder. Make sure to run the setup.py or follow the instructions on the package Github.')
+        
+        buildDir = workDir / '../../build' 
+        
+        if not(buildDir.exists() and buildDir.is_dir()):
+        
+            raise ValueError('Cannot find the build folder. Make sure to run the setup.py or follow the instructions on the package Github.')
     
     libDir = []
     
