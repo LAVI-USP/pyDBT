@@ -8,21 +8,29 @@ Created on Wed Jan 22 13:35:00 2020
  
 import pathlib
 
-def initialConfig():
+def initialConfig(buildDir=None, createOutFolder=True):
 
-    workDir = pathlib.Path().absolute()
+    # Build folder was not provided, try find it on up folders
+    if buildDir == None:
+        workDir = pathlib.Path().absolute()
+        buildDir = findBuildDir(workDir)
+    else:
+        buildDir = pathlib.Path(buildDir)
     
-    outDir = workDir / 'output'
+    # Should I create output folder?
+    if createOutFolder:
+        outDir = workDir / 'output'
+        
+        if not(outDir.exists() and outDir.is_dir()):
+            pathlib.Path(outDir).mkdir()
     
-    if not(outDir.exists() and outDir.is_dir()):
-        pathlib.Path(outDir).mkdir()
-                
-    libFiles = findLibraries(workDir)
+    # Find the compiled lib files
+    libFiles = findLibraries(buildDir)
     
     return libFiles
-        
 
-def findLibraries(workDir):
+
+def findBuildDir(workDir):
     
     buildDir = workDir / '../build' 
     
@@ -33,6 +41,11 @@ def findLibraries(workDir):
         if not(buildDir.exists() and buildDir.is_dir()):
         
             raise ValueError('Cannot find the build folder. Make sure to run the setup.py or follow the instructions on the package Github.')
+    
+    return buildDir
+       
+
+def findLibraries(buildDir):
     
     libDir = []
     
