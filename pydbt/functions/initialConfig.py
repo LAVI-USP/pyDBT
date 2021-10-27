@@ -10,9 +10,10 @@ import pathlib
 
 def initialConfig(buildDir=None, createOutFolder=True):
 
+    workDir = pathlib.Path().absolute()
+
     # Build folder was not provided, try find it on up folders
     if buildDir == None:
-        workDir = pathlib.Path().absolute()
         buildDir = findBuildDir(workDir)
     else:
         buildDir = pathlib.Path(buildDir)
