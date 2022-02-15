@@ -78,6 +78,9 @@ extern "C" void projectionDD_lib(double* const pVolume,
 	const double tubeAngle = (const double)pGeo[16];
 	const double detAngle = (const double)pGeo[17];
 
+	const int x_offset = (const int)pGeo[18];
+	const int y_offset = (const int)pGeo[19];
+
 	double* const pTubeAngle = (double*)malloc(nProj * sizeof(double));
 	double* const pDetAngle = (double*)malloc(nProj * sizeof(double));
 
@@ -123,9 +126,9 @@ extern "C" void projectionDD_lib(double* const pVolume,
 
 	mapBoudaries(pDetZ, nDetYMap, 0.0, 0.0, 0.0);
 
-	mapBoudaries(pObjX, nPixXMap, (double)nPixX, -dx, 0.0);
+	mapBoudaries(pObjX, nPixXMap, (double)nPixX, -dx, x_offset);
 
-	mapBoudaries(pObjY, nPixYMap, nPixY / 2.0, dy, 0.0);
+	mapBoudaries(pObjY, nPixYMap, nPixY / 2.0, dy, y_offset);
 
 	mapBoudaries(pObjZ, nSlices, 0.0, dz, DAG + (dz / 2.0));
 

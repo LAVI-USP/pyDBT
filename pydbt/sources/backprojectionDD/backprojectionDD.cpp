@@ -81,6 +81,9 @@ extern "C" void backprojectionDD_lib(double* const pProj,
 	double* const pTubeAngle = (double*)malloc(nProj * sizeof(double));
 	double* const pDetAngle = (double*)malloc(nProj * sizeof(double));
 
+	const int x_offset = (const int)pGeo[18];
+	const int y_offset = (const int)pGeo[19];
+
 	linspace(-tubeAngle/2, tubeAngle/2, nProj, pTubeAngle);
 	linspace(-detAngle/2, detAngle/2, nProj, pDetAngle);
 
@@ -117,9 +120,9 @@ extern "C" void backprojectionDD_lib(double* const pProj,
 
 	mapBoudaries(pDetZ, nDetYMap, 0.0, 0.0, 0.0);
 
-	mapBoudaries(pObjX, nPixXMap, (double)nPixX, -dx, 0.0);
+	mapBoudaries(pObjX, nPixXMap, (double)nPixX, -dx, x_offset);
 
-	mapBoudaries(pObjY, nPixYMap, nPixY / 2.0, dy, 0.0);
+	mapBoudaries(pObjY, nPixYMap, nPixY / 2.0, dy, y_offset);
 
 	mapBoudaries(pObjZ, nSlices, 0.0, dz, DAG + (dz / 2.0));
 

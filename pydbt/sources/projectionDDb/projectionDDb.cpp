@@ -82,12 +82,15 @@ extern "C" void projectionDDb_lib(double* const pVolume,
 	double* const pTubeAngle = (double*)malloc(nProj * sizeof(double));
 	double* const pDetAngle = (double*)malloc(nProj * sizeof(double));
 
+	const int x_offset = (const int)pGeo[18];
+	const int y_offset = (const int)pGeo[19];
+
 	linspace(-tubeAngle/2, tubeAngle/2, nProj, pTubeAngle);
 	linspace(-detAngle/2, detAngle/2, nProj, pDetAngle);
 
 	// printf("Nx:%d Ny:%d Nz:%d \nNu:%d Nv:%d \nDx:%.2f Dy:%.2f Dz:%.2f \nDu:%.2f Dv:%.2f \nDSD:%.2f DDR:%.2f \nTube angle:%.2f \nDet angle:%.2f", nPixX, nPixY, nSlices, nDetX, nDetY, dx, dy, dz, du, dv, DSD, DDR, tubeAngle, detAngle);
 
-	projectionDDb(pProj, pVolume, pTubeAngle, pDetAngle, nProj, nPixX, nPixY, nSlices, nDetX, nDetY, dx, dy, dz, du, dv, DSD, DDR, DAG);
+	projectionDDb(pProj, pVolume, pTubeAngle, pDetAngle, x_offset, y_offset, nProj, nPixX, nPixY, nSlices, nDetX, nDetY, dx, dy, dz, du, dv, DSD, DDR, DAG);
 
 	free(pTubeAngle);
 	free(pDetAngle);
@@ -102,6 +105,8 @@ void projectionDDb(double* const pProj,
 	double* const pVolume,
 	double* const pTubeAngle,
 	double* const pDetAngle,
+	const  int x_offset,
+	const  int y_offset,
 	const  int nProj,
 	const  int nPixX,
 	const  int nPixY,
@@ -167,9 +172,9 @@ void projectionDDb(double* const pProj,
 
 	mapBoudaries(pDetZ, nDetYMap, 0.0, 0.0, 0.0);
 
-	mapBoudaries(pObjX, nPixXMap, (double)nPixX, -dx, 0.0);
+	mapBoudaries(pObjX, nPixXMap, (double)nPixX, -dx, x_offset);
 
-	mapBoudaries(pObjY, nPixYMap, nPixY / 2.0, dy, 0.0);
+	mapBoudaries(pObjY, nPixYMap, nPixY / 2.0, dy, y_offset);
 
 	mapBoudaries(pObjZ, nSlices, 0.0, dz, DAG + (dz / 2.0));
 

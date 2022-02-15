@@ -9,7 +9,7 @@ Created on Tue Jan 14 08:37:11 2020
 #%%
 import matplotlib.pyplot as plt 
 
-from parameterSettings import geometry_settings
+from parameters.parameterSettings import geometry_settings
 
 from functions.manageDicom import readDicom
 from functions.dataPreProcess import dataPreProcess

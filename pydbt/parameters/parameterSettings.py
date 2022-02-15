@@ -43,6 +43,9 @@ class geometry_settings():
         self.tubeAngle = 15         # Tube Angle
         
         self.detAngle = 4.2         # Detector Angle
+
+        self.x_offset = 0       # Volume X offset (mm)
+        self.y_offset = 0       # Volume Y offset (mm) 
     
     def GE(self):
          
@@ -79,6 +82,9 @@ class geometry_settings():
         self.tubeAngle = 25     # Tube Angle
         
         self.detAngle = 0       # Detector Angle
+
+        self.x_offset = 0       # Volume X offset (mm)
+        self.y_offset = 0       # Volume Y offset (mm) 
             
     def SheppLogan(self):
          
@@ -115,4 +121,8 @@ class geometry_settings():
         self.tubeAngle = 15     # Tube Angle
         
         self.detAngle = 4.2     # Detector Angle
+
+        self.x_offset = 0       # Volume X offset (mm)
+        self.y_offset = 0       # Volume Y offset (mm) 
+
         
