@@ -9,8 +9,8 @@ Created on Fri Jan 15 16:06:05 2021
 import numpy as np
 import numpy.ctypeslib as ctl
 
-from functions.utilities import findAndLoadLibray
-from functions.utilities import geoAsNp
+from .utilities import findAndLoadLibray
+from .utilities import geoAsNp
 
 def projectionDD(vol, geo, libFiles):
     

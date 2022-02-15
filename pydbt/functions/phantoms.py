@@ -9,7 +9,7 @@ Source: https://gist.github.com/blink1073/6e417c726b0dd03d5ea0
 
 import numpy as np
 
-def phantom3d(phantom='modified-shepp-logan', n=64):
+def phantom3d(phantom='modified-shepp-logan', phantom_matrix=None, n=64):
     """
     Three-dimensional Shepp-Logan phantom
     Can be used to test 3-D reconstruction algorithms.
@@ -46,7 +46,7 @@ def phantom3d(phantom='modified-shepp-logan', n=64):
     elif phantom == 'yu_ye_wang':
         ellipse = yu_ye_wang()
     else:
-        ellipse = phantom
+        ellipse = phantom_matrix
 
     p = np.zeros(n**3)
     rng = np.linspace(-1,1,n)

@@ -13,7 +13,7 @@ import sys
 
 sys.path.insert(1,'../')
 
-from parameterSettings import geometry_settings
+from parameters.parameterSettings import geometry_settings
 
 from functions.initialConfig import initialConfig
 from functions.phantoms import phantom3d

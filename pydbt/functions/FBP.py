@@ -7,8 +7,8 @@ Created on Mon Feb  3 07:43:53 2020
 """
 
 import numpy as np
-from functions.backprojectionDDb import backprojectionDDb
-from functions.backprojectionDD import backprojectionDD
+from .backprojectionDDb import backprojectionDDb
+from .backprojectionDD import backprojectionDD
 
 def FDK(proj, geo, filterType, cutoff, libFiles):
     

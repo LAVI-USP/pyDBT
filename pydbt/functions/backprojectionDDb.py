@@ -9,8 +9,8 @@ Created on Fri Jan 17 18:46:40 2020
 import numpy as np
 import numpy.ctypeslib as ctl
 
-from functions.utilities import findAndLoadLibray
-from functions.utilities import geoAsNp
+from .utilities import findAndLoadLibray
+from .utilities import geoAsNp
 
 def backprojectionDDb(proj, geo, libFiles):
     

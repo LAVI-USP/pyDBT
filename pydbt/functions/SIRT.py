@@ -9,8 +9,8 @@ Created on Tue Feb  4 07:50:36 2020
 import numpy as np
 import time
 
-from functions.backprojectionDDb import backprojectionDDb
-from functions.projectionDDb import projectionDDb
+from .backprojectionDDb import backprojectionDDb
+from .projectionDDb import projectionDDb
 
 def SIRT(proj, geo, nIter, libFiles):
        
