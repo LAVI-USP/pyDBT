@@ -15,9 +15,15 @@ This repository is a python extension of the [DBT toolbox](https://github.com/LA
 
     * ```cd pyDBT```
 
+ 3. Clone NVIDIA cuda-samples directory inside pyDBT:
+    
+    * ```git clone https://github.com/NVIDIA/cuda-samples```
+
  3. Install the package:
 
     * ```python3 setup.py install```
+
+ 3. If you have problems with `arch=sm_XX`, modify it in the `setup.py` accordingly to your NVIDIA-GPU architecture. This [link](https://arnon.dk/matching-sm-architectures-arch-and-gencode-for-various-nvidia-cards/) has some references.
 
  4. run the example:
 

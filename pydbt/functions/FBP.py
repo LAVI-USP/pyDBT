@@ -7,8 +7,7 @@ Created on Mon Feb  3 07:43:53 2020
 """
 
 import numpy as np
-from .backprojectionDDb import backprojectionDDb
-from .backprojectionDD import backprojectionDD
+from .projection_operators import backprojectionDD
 
 def FDK(proj, geo, filterType, cutoff, libFiles):
     
@@ -20,7 +19,7 @@ def FDK(proj, geo, filterType, cutoff, libFiles):
     else:
         raise ValueError('Unknown filter type.')
         
-    vol = backprojectionDD(proj, geo, libFiles)
+    vol = backprojectionDD(proj, geo, -1, libFiles)
     
     return vol
     

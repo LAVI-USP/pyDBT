@@ -5,7 +5,7 @@
 % =========================================================================
 %{
 % -------------------------------------------------------------------------
-%                 projectionDDb_lib(pVolume, pProj, ppGeo)
+%                 projectionDDb_lib(pVolume, pProj, pGeo, idXProj)
 % -------------------------------------------------------------------------
 %     DESCRIPTION:
 %     This function calculates the volume projection based on the
@@ -15,8 +15,9 @@
 %
 %     INPUT:
 %
-%     - pVolume = pointer to 3D volume for projection
-%     - ppGeo = Parameter of all pGeometry
+%     - pVolume = 3D volume for projection
+%     - pGeo = Parameter of all geometry
+%	  - idXProj = projection number to be projected
 %
 %     OUTPUT:
 %
@@ -55,7 +56,8 @@
 
 extern "C" void projectionDDb_lib(double* const pVolume, 
 								  double* const pProj, 
-								  float* const pGeo){
+								  float* const pGeo,
+								  const signed int idXProj){
 
 
 	const int unsigned nPixX = (const int)pGeo[0]; 
@@ -82,15 +84,15 @@ extern "C" void projectionDDb_lib(double* const pVolume,
 	double* const pTubeAngle = (double*)malloc(nProj * sizeof(double));
 	double* const pDetAngle = (double*)malloc(nProj * sizeof(double));
 
-	const int x_offset = (const int)pGeo[18];
-	const int y_offset = (const int)pGeo[19];
+	const double x_offset = (const double)pGeo[18];
+	const double y_offset = (const double)pGeo[19];
 
 	linspace(-tubeAngle/2, tubeAngle/2, nProj, pTubeAngle);
 	linspace(-detAngle/2, detAngle/2, nProj, pDetAngle);
 
 	// printf("Nx:%d Ny:%d Nz:%d \nNu:%d Nv:%d \nDx:%.2f Dy:%.2f Dz:%.2f \nDu:%.2f Dv:%.2f \nDSD:%.2f DDR:%.2f \nTube angle:%.2f \nDet angle:%.2f", nPixX, nPixY, nSlices, nDetX, nDetY, dx, dy, dz, du, dv, DSD, DDR, tubeAngle, detAngle);
 
-	projectionDDb(pProj, pVolume, pTubeAngle, pDetAngle, x_offset, y_offset, nProj, nPixX, nPixY, nSlices, nDetX, nDetY, dx, dy, dz, du, dv, DSD, DDR, DAG);
+	projectionDDb(pProj, pVolume, pTubeAngle, pDetAngle, nProj, nPixX, nPixY, nSlices, nDetX, nDetY, idXProj, x_offset, y_offset, dx, dy, dz, du, dv, DSD, DDR, DAG);
 
 	free(pTubeAngle);
 	free(pDetAngle);
@@ -105,14 +107,15 @@ void projectionDDb(double* const pProj,
 	double* const pVolume,
 	double* const pTubeAngle,
 	double* const pDetAngle,
-	const  int x_offset,
-	const  int y_offset,
-	const  int nProj,
-	const  int nPixX,
-	const  int nPixY,
-	const  int nSlices,
-	const  int nDetX,
-	const  int nDetY,
+	const unsigned int nProj,
+	const unsigned int nPixX,
+	const unsigned int nPixY,
+	const unsigned int nSlices,
+	const unsigned int nDetX,
+	const unsigned int nDetY,
+	const signed int idXProj,
+	const double x_offset,
+	const double y_offset,
 	const double dx,
 	const double dy,
 	const double dz,
@@ -247,8 +250,20 @@ void projectionDDb(double* const pProj,
 				pVolumet[(nz*nPixYMap *nPixXMap) + (x*nPixYMap) + y] += pVolumet[(nz*nPixYMap *nPixXMap) + ((x - 1)*nPixYMap) + y];	
 
 
+	// Test if we will loop over all projs or not
+	unsigned int projIni, projEnd;
+	if(idXProj == -1){
+		projIni = 0;
+		projEnd = nProj;
+	}
+	else{
+		projIni = (unsigned int) idXProj;
+		projEnd = (unsigned int) idXProj + 1;
+	}
+	
+	
 	// For each projection
-	for (int p = 0; p < nProj; p++) {
+	for (unsigned int p = projIni; p < projEnd; p++) {
 		
 		// Get specif tube angle for the projection
 		double theta = pTubeAngle[p] * M_PI / 180.0;

@@ -5,7 +5,7 @@
 % =========================================================================
 %{
 % -------------------------------------------------------------------------
-%                 projectionDD_lib(pVolume, pProj, ppGeo
+%                 projectionDD_lib(pVolume, pProj, pGeo, idXProj)
 % -------------------------------------------------------------------------
 %     DESCRIPTION:
 %     This function calculates the volume projection based on the
@@ -16,8 +16,9 @@
 %
 %     INPUT:
 %
-%     - pVolume = pointer to 3D volume for projection
-%     - ppGeo = Parameter of all pGeometry
+%     - pVolume = 3D volume for projection
+%     - pGeo = Parameter of all geometry
+%	  - idXProj = projection number to be projected
 %
 %     OUTPUT:
 %
@@ -54,7 +55,8 @@
 
 extern "C" void projectionDD_lib(double* const pVolume, 
 								 double* const pProj, 
-								 float* const pGeo){
+								 float* const pGeo,
+								 const signed int idXProj){
 
 
 	const int unsigned nPixX = (const int)pGeo[0]; 
@@ -78,8 +80,8 @@ extern "C" void projectionDD_lib(double* const pVolume,
 	const double tubeAngle = (const double)pGeo[16];
 	const double detAngle = (const double)pGeo[17];
 
-	const int x_offset = (const int)pGeo[18];
-	const int y_offset = (const int)pGeo[19];
+	const double x_offset = (const double)pGeo[18];
+	const double y_offset = (const double)pGeo[19];
 
 	double* const pTubeAngle = (double*)malloc(nProj * sizeof(double));
 	double* const pDetAngle = (double*)malloc(nProj * sizeof(double));
@@ -151,8 +153,20 @@ extern "C" void projectionDD_lib(double* const pVolume,
 			for (int v = 0; v < nDetY; v++)
 				pProjt[(p * nDetY * nDetX) + (u * nDetY) + v] = 0.0;
 
+	// Test if we will loop over all projs or not
+	unsigned int projIni, projEnd;
+	if(idXProj == -1){
+		projIni = 0;
+		projEnd = nProj;
+	}
+	else{
+		projIni = (unsigned int) idXProj;
+		projEnd = (unsigned int) idXProj + 1;
+	}
+	
+	
 	// For each projection
-	for (int p = 0; p < nProj; p++) {
+	for (unsigned int p = projIni; p < projEnd; p++) {
 
 		// Get specif tube angle for the projection
 		double theta = pTubeAngle[p] * M_PI / 180.0;

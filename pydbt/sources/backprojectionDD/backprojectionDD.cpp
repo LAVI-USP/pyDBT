@@ -5,7 +5,7 @@
 % =========================================================================
 %{
 % -------------------------------------------------------------------------
-%                 backprojectionDD_lib(pProj, pVolume, pGeo)
+%                 backprojectionDD_lib(pProj, pVolume, pGeo, idXProj)
 % -------------------------------------------------------------------------
 %     DESCRIPTION:
 %     This function reconstruct the 3D volume from projections, based on
@@ -18,6 +18,7 @@
 %
 %     - pProj = Pointer to 2D projections for each angle
 %     - pGeo = Pointer to parameters of all pGeometry
+%	  - idXProj = projection number to be projected
 %
 %     OUTPUT:
 %
@@ -54,7 +55,8 @@
 
 extern "C" void backprojectionDD_lib(double* const pProj, 
 								  	 double* const pVolume, 
-								  	 float* const pGeo){
+								  	 float* const pGeo,
+									 const signed int idXProj){
 
 
 	const int unsigned nPixX = (const int)pGeo[0]; 
@@ -81,8 +83,8 @@ extern "C" void backprojectionDD_lib(double* const pProj,
 	double* const pTubeAngle = (double*)malloc(nProj * sizeof(double));
 	double* const pDetAngle = (double*)malloc(nProj * sizeof(double));
 
-	const int x_offset = (const int)pGeo[18];
-	const int y_offset = (const int)pGeo[19];
+	const double x_offset = (const double)pGeo[18];
+	const double y_offset = (const double)pGeo[19];
 
 	linspace(-tubeAngle/2, tubeAngle/2, nProj, pTubeAngle);
 	linspace(-detAngle/2, detAngle/2, nProj, pDetAngle);
@@ -158,8 +160,23 @@ extern "C" void backprojectionDD_lib(double* const pProj,
 				pProjf[(p*nDetX*nDetY) + (x*nDetY) + y] = pProj[(p*nDetX*nDetY) + (x_inv*nDetY) + y];
 
 
+
+	// Test if we will loop over all projs or not
+	unsigned int projIni, projEnd, nProj2Run;
+	if(idXProj == -1){
+		projIni = 0;
+		projEnd = nProj;
+		nProj2Run = nProj;
+	}
+	else{
+		nProj2Run = 1;
+		projIni = (unsigned int) idXProj;
+		projEnd = (unsigned int) idXProj + 1;
+	}
+	
+	
 	// For each projection
-	for (int p = 0; p < nProj; p++) {
+	for (unsigned int p = projIni; p < projEnd; p++) {
 
 		// Get specif tube angle for the projection
 		double theta = pTubeAngle[p] * M_PI / 180.0;
@@ -378,7 +395,7 @@ extern "C" void backprojectionDD_lib(double* const pProj,
 	for (int z = 0; z < nSlices; z++)
 		for (int x = 0, x_inv = nPixX - 1; x < nPixX; x++, x_inv--)
 			for (int y = 0; y < nPixY; y++)
-				pVolume[(z*nPixX*nPixY) + (x*nPixY) + y] = pVolumet[(z*nPixX*nPixY) + (x_inv*nPixY) + y] / (double) nProj;
+				pVolume[(z*nPixX*nPixY) + (x*nPixY) + y] = pVolumet[(z*nPixX*nPixY) + (x_inv*nPixY) + y] / (double) nProj2Run;
 
 	free(pVolumet);
 

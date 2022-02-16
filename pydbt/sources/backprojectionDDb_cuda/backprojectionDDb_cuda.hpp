@@ -1,6 +1,6 @@
 /*
 %% Author: Rodrigo de Barros Vimieiro
-% Date: January, 2020
+% Date: Feb, 2022
 % rodrigo.vimieiro@gmail.com
 % =========================================================================
 %{
@@ -10,7 +10,7 @@
 %     DESCRIPTION:
 %     This is the header function
 %     ---------------------------------------------------------------------
-%     Copyright (C) <2020>  <Rodrigo de Barros Vimieiro>
+%     Copyright (C) <2022>  <Rodrigo de Barros Vimieiro>
 %
 %     This program is free software: you can redistribute it and/or modify
 %     it under the terms of the GNU General Public License as published by
@@ -26,22 +26,46 @@
 %     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %}
 % =========================================================================
-%% 3-D Projection Branchless Distance Driven Code (CPU-Multithread)
+%% 3-D Distance Driven Back-projection header
 */
 
 #include <stdio.h>
-#include <omp.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include <time.h>
 
-// Global variable
-int nThreads;
+// Includes CUDA
+#include <cuda_runtime.h>
 
-void projectionDDb(double* const pProj,
-	double* const pVolume,
-	double* const pTubeAngle,
-	double* const pDetAngle,
+// Utilities and timing functions
+#include <helper_functions.h>    // includes cuda.h and cuda_runtime_api.h
+
+// CUDA helper functions
+#include <helper_cuda.h>         // helper functions for CUDA error check
+
+#define integrateXcoord 1
+#define integrateYcoord 0
+
+
+/*
+Reference: TIGRE - https://github.com/CERN/TIGRE
+*/
+#define cudaCheckErrors(msg) \
+do { \
+        cudaError_t __err = cudaGetLastError(); \
+        if (__err != cudaSuccess) { \
+                printf("%s \n",msg);\
+        } \
+} while (0)
+
+void linspace(double start, 
+                double end, 
+                int num,
+                double* pLinspaced);
+
+void backprojectionDDb(double* const h_pVolume,
+	double* const h_pProj,
+	double* const h_pTubeAngle,
+	double* const h_pDetAngle,
 	const unsigned int nProj,
 	const unsigned int nPixX,
 	const unsigned int nPixY,
@@ -59,58 +83,3 @@ void projectionDDb(double* const pProj,
 	const double DSD,
 	const double DDR,
 	const double DAG);
-
-void linspace(double start, 
-			  double end, 
-			  int num,
-			  double* pLinspaced);
-
-void mapBoudaries(double* pBound,
-	const int nElem,
-	const double valueLeftBound,
-	const double sizeElem,
-	const double offset);
-
-void mapDet2Slice(double* const pXmapp,
-	double* const pYmapp,
-	double tubeX,
-	double tubeY,
-	double tubeZ,
-	double * const pXcoord,
-	double * const pYcoord,
-	double * const pZcoord,
-	double ZSlicecoord,
-	const int nXelem,
-	const int nYelem);
-
-void bilinear_interpolation(double* projI,
-	double* pVolume,
-	double* pDetmX,
-	double* pDetmY,
-	const int nDetXMap,
-	const int nDetYMap,
-	const int nPixXMap,
-	const int nPixYMap,
-	const double pixelSize,
-	const unsigned int nz);
-
-void differentiation(double* pProj,
-	double* projI,
-	double* const pDetmX,
-	double* const pDetmY,
-	double tubeX,
-	double rtubeY,
-	double rtubeZ,
-	double* const pDetX,
-	double* const pRdetY,
-	double* const pRdetZ,
-	const int nDetX,
-	const int nDetY,
-	const int nDetXMap,
-	const int nDetYMap,
-	const double du,
-	const double dv,
-	const double dx,
-	const double dy,
-	const double dz,
-	const unsigned int p);
