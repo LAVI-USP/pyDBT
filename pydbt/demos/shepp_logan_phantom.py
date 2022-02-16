@@ -18,9 +18,10 @@ from parameters.parameterSettings import geometry_settings
 from functions.initialConfig import initialConfig
 from functions.phantoms import phantom3d
 
-from functions.projectionDD import projectionDD
+from functions.projection_operators import projectionDD
 
 from functions.FBP import FDK as FBP
+from functions.SART import SART
 
 
 #%% Call function for initial configurations
@@ -41,7 +42,7 @@ sheppLogan = sheppLogan[:,:,np.round(np.linspace(0,geo.nx-1,geo.nz)).astype(np.i
 
 print("Starting projection...")
 
-proj = projectionDD(sheppLogan, geo, libFiles) 
+proj = projectionDD(sheppLogan, geo, -1, libFiles) 
 
 plt.figure()
 plt.title('Projected volume')
@@ -57,8 +58,10 @@ cutoff = 0.75;               # Percentage until cut off frequency (FBP)
 
 print("Starting reconstruction...")
 
-#                       ## Uncomment to use ##
-vol = FBP(proj, geo, filterType, cutoff, libFiles)
+### Uncomment to use ##
+# vol = FBP(proj, geo, filterType, cutoff, libFiles)
+
+vol = SART(proj, geo, nIter, libFiles)
 
 plt.figure()
 plt.title('Reconstructed slice')

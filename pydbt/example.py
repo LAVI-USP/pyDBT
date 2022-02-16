@@ -17,6 +17,7 @@ from functions.initialConfig import initialConfig
 
 from functions.FBP import FDK as FBP
 from functions.SIRT import SIRT
+from functions.SART import SART
 
 
 #%% Call function for initial configurations
@@ -48,7 +49,7 @@ print("Starting reconstruction...")
 #                       ## Uncomment to use ##
 # vol = FBP(proj, geo, filterType, cutoff, libFiles)
 
-vol = SIRT(proj, geo, nIter, libFiles)
+vol = SART(proj, geo, nIter, libFiles)
 
 plt.figure()
 plt.title('Reconstructed slice')
