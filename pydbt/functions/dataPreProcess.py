@@ -12,8 +12,10 @@ from skimage.filters import threshold_otsu
 
 def dataPreProcess(proj, geo, flagtransfIntensity=True, flagCropProj=True):
     
+    indX = 0
+    
     if flagCropProj:
-        proj = cropProj(proj)
+        proj, indX = cropProj(proj)
     
     if flagtransfIntensity:
         proj = transfIntensity(proj)
@@ -21,7 +23,7 @@ def dataPreProcess(proj, geo, flagtransfIntensity=True, flagCropProj=True):
     # Modifies parameters based on segmentation
     geo.nu = proj.shape[1]  # Number of pixels (columns)
     
-    return proj
+    return proj, indX
     
 
 
@@ -61,7 +63,7 @@ def cropProj(proj):
         
     proj_crop = proj[:,indX::,:]
     		    
-    return proj_crop
+    return proj_crop, indX
 
 
 def transfIntensity(proj):
