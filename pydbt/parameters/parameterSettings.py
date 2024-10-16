@@ -85,6 +85,45 @@ class geometry_settings():
 
         self.x_offset = 0       # Volume X offset (mm)
         self.y_offset = 0       # Volume Y offset (mm) 
+
+    def Siemens(self):
+
+        # Breast voxels density 
+        self.nx = 1372    # number of voxels (columns)
+        self.ny = 3264    # number of voxels (rows)
+        self.nz = 49      # number of voxels (slices)
+        
+        # Detector panel pixel density
+        self.nu = 1376    # number of pixels (columns)
+        self.nv = 3264    # number of pixels (rows)
+        
+        # Single voxel real size (mm)
+        self.dx = 0.085 
+        self.dy = 0.085
+        self.dz = 1
+        
+        # Single detector real size (mm)
+        self.du = 0.085   
+        self.dv = 0.085
+        
+        # X-ray source and detector distances
+        self.DSD = 650                          # Distance from source to detector (mm)
+        self.DSO = 633                          # Distance from source to the top of object (mm)
+        self.DDR = 47                           # Distance from detector to pivot (mm)
+        self.DSR = self.DSD - self.DDR          # Distance from source to pivot (mm)
+        self.DAG = 17                           # Distance of Air Gap (mm)
+        
+        # Number of Projections
+        self.nProj = 25  
+        
+        # Angle settings (Degrees)
+        self.tubeAngle = 50     # Tube Angle
+        
+        self.detAngle = 0       # Detector Angle
+
+        self.x_offset = 0       # Volume X offset (mm)
+        self.y_offset = 0       # Volume Y offset (mm) 
+
             
     def SheppLogan(self):
          
