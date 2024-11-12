@@ -7,13 +7,65 @@ Created on Mon Jan 13 15:19:22 2020
 """
      
 class geometry_settings():
-    
+    def __init__(self, 
+                 voxels=None,  
+                 detector_el=None,
+                 voxels_size=None,
+                 detector_size=None,
+                 source_dist=None,
+                 gap = None,
+                 n_proj = None,
+                 tube_angle = None,
+                 detector_angle = None,
+                 offset = None
+                 ):
+        
+        if voxels is not None:
+            self.nx = voxels[0]
+            self.ny = voxels[1]
+            self.nz = voxels[2]
+
+        if detector_el is not None:
+            self.nu = detector_el[0]
+            self.nv = detector_el[1]
+
+        if voxels_size is not None:
+            self.dx = round(voxels_size[0], 3)
+            self.dy = round(voxels_size[1], 3)
+            self.dz = round(voxels_size[2], 3)
+
+        if detector_size is not None:
+            self.du = detector_size[0]  
+            self.dv = detector_size[1]
+        
+        if source_dist is not None:
+            self.DSD = source_dist                           
+            self.DSO = source_dist - (voxels[2]*voxels_size[2])                        
+            self.DDR = 0                             
+            self.DSR = self.DSD - self.DDR           
+        
+        if gap is not None:
+            self.DAG = abs(gap)                           
+        
+        if n_proj is not None:
+            self.nProj = n_proj
+
+        if tube_angle is not None:
+            self.tubeAngle = tube_angle
+
+        if detector_angle is not None:
+            self.detAngle = detector_angle
+
+        if offset is not None:
+            self.x_offset = offset[0]
+            self.y_offset = offset[1]
+
     def Hologic(self):
          
         # Breast voxels density 
         self.nx = 1996    # number of voxels (columns)
         self.ny = 2457    # number of voxels (rows)
-        self.nz = 78     # number of voxels (slices)
+        self.nz = 78      # number of voxels (slices)
         
         # Detector panel pixel density
         self.nu = 1664    # number of pixels (columns)
@@ -123,8 +175,7 @@ class geometry_settings():
 
         self.x_offset = 0       # Volume X offset (mm)
         self.y_offset = 0       # Volume Y offset (mm) 
-
-            
+       
     def SheppLogan(self):
          
         # Breast voxels density 
